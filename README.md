@@ -27,9 +27,11 @@ porting 작업과 테스트는 모두 IntellJ IDEA 2019.2.3 Ultimate Edition을 
 
 2. Database에 각 모듈별로 필요한 table 생성
 
-docker-compose.yml에서 database는 자동으로 만들어주지만, 
-각 장의 예제에서 사용할 테이블은 직접 sql을 실행시켜 만들어주셔야 합니다.
-각 모듈별로 sql 디렉토리가 하나씩 존재하는데, 실습하려는 각 예제 모듈에서 해당 디렉토리를 찾아 user_create.sql을 실행해주세요.
+    docker-compose.yml에서 database는 자동으로 만들어주지만, 
+    각 장의 예제에서 사용할 테이블은 직접 sql을 실행시켜 만들어주셔야 합니다.
+    각 모듈별로 sql 디렉토리가 하나씩 존재하는데, 실습하려는 각 예제 모듈에서 해당 디렉토리를 찾아 user_create.sql을 실행해주세요.
+
+
 
 
 혹시 문의사항이 있으시거나 수정해야할 부분이 있으면 issue 발행, 혹은 pr 부탁드립니다.
