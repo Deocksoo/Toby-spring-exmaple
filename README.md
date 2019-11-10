@@ -1,8 +1,9 @@
 # 토비의 스프링 학습 예제
+토비의 스프링 예제들을 IntelliJ gradle환경에서 따라해보기 위해 만든 저장소입니다.
 
 ## 실행 환경
 토비의 스프링 예제를 gradle 빌드도구를 사용하도록 porting 하였습니다.
-porting 작업과 테스트는 모두 IntellJ IDEA 2019.2.3 Ultimate Edition을 통해 진행하였습니다.
+porting 작업과 테스트는 모두 IntelliJ IDEA 2019.2.3 Ultimate Edition을 통해 진행하였습니다.
 학습 예제 테스트 환경은 아래와 같습니다.
 ```
 1. jdk 1.8
@@ -13,6 +14,7 @@ porting 작업과 테스트는 모두 IntellJ IDEA 2019.2.3 Ultimate Edition을 
 
 
 ## MySQL server 설치 및 실행 가이드
+자세한 보다 자세한 설치 가이드가 필요하시다면 https://deockstory.tistory.com/24 블로그 포스팅을 참고해주세요.
 
 1. docker를 이용한 MySQL server 설치
 
