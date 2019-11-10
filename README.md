@@ -14,7 +14,7 @@ porting 작업과 테스트는 모두 IntelliJ IDEA 2019.2.3 Ultimate Edition을
 
 
 ## MySQL server 설치 및 실행 가이드
-자세한 보다 자세한 설치 가이드가 필요하시다면 https://deockstory.tistory.com/24 블로그 포스팅을 참고해주세요.
+보다 자세한 설치 가이드가 필요하시다면 https://deockstory.tistory.com/24 블로그 포스팅을 참고해주세요.
 
 1. docker를 이용한 MySQL server 설치
 
