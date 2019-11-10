@@ -1,4 +1,2 @@
 rootProject.name = 'spring-exmaple'
-include 'ch5.fianl'
-findProject(':ch5.fianl')?.name = 'untitled'
-
+include 'ch5-fianl'

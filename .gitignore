@@ -1,5 +1,7 @@
 .idea
 *.iml
 **/bin/*
+**/build/*
+**/docker/db/*
 *.jar
 .gradle
