@@ -21,7 +21,7 @@ class UserDaoTest {
     void setUp() {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(DaoFactory.class);
         userDao = applicationContext.getBean("userDao", UserDao.class);
-        deleteAllStrategy = new DeleteAllStatement();
+        deleteAllStrategy = new DeleteAllStrategy();
     }
 
     @AfterEach
