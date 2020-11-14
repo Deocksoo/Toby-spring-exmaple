@@ -15,11 +15,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class UserDaoTest {
     private UserDao userDao;
+    private StatementStrategy deleteAllStrategy;
 
     @BeforeEach
     void setUp() {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(DaoFactory.class);
         userDao = applicationContext.getBean("userDao", UserDao.class);
+        deleteAllStrategy = new DeleteAllStatement();
     }
 
     @AfterEach

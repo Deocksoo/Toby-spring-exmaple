@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public abstract class UserDao {
+public class UserDao {
     private final DataSource dataSource;
 
     public UserDao(DataSource dataSource) {
@@ -57,12 +57,17 @@ public abstract class UserDao {
     }
 
     public void deleteAll() throws SQLException {
+        StatementStrategy statementStrategy = new DeleteAllStatement();
+        jdbcContextWithStatementStrategy(statementStrategy);
+    }
+
+    public void jdbcContextWithStatementStrategy(StatementStrategy statementStrategy) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
         try {
             connection = dataSource.getConnection();
-            preparedStatement = makeStatement(connection);
+            preparedStatement = statementStrategy.makePreparedStatement(connection);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw e;
@@ -81,8 +86,6 @@ public abstract class UserDao {
             }
         }
     }
-
-    abstract protected PreparedStatement makeStatement(Connection connection) throws SQLException;
 
     public int getCount() throws SQLException {
         Connection connection = null;
