@@ -22,6 +22,6 @@ public class DaoFactory {
 
     @Bean
     public UserDao userDao() {
-        return new UserDao(dataSource());
+        return new UserDaoDeleteAll(dataSource());
     }
 }

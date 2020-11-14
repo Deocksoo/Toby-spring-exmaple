@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDao {
+public abstract class UserDao {
     private final DataSource dataSource;
 
     public UserDao(DataSource dataSource) {
@@ -62,7 +62,7 @@ public class UserDao {
 
         try {
             connection = dataSource.getConnection();
-            preparedStatement = connection.prepareStatement("delete from users");
+            preparedStatement = makeStatement(connection);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw e;
@@ -80,8 +80,9 @@ public class UserDao {
                 }
             }
         }
-
     }
+
+    abstract protected PreparedStatement makeStatement(Connection connection) throws SQLException;
 
     public int getCount() throws SQLException {
         Connection connection = null;
