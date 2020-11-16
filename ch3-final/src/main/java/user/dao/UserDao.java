@@ -1,6 +1,7 @@
 package user.dao;
 
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import user.domain.User;
 
 import javax.sql.DataSource;
@@ -11,15 +12,15 @@ import java.sql.SQLException;
 
 public class UserDao {
     private final DataSource dataSource;
-    private final JdbcContext jdbcContext;
+    private final JdbcTemplate jdbcTemplate;
 
-    public UserDao(DataSource dataSource, JdbcContext jdbcContext) {
+    public UserDao(DataSource dataSource) {
         this.dataSource = dataSource;
-        this.jdbcContext = jdbcContext;
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     public void add(User user) throws SQLException {
-        jdbcContext.workWithStatementStrategy(connection -> {
+        jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(
                 "insert into users(id, name, password) values(?,?,?)");
             ps.setString(1, user.getId());
@@ -55,33 +56,11 @@ public class UserDao {
     }
 
     public void deleteAll() throws SQLException {
-        jdbcContext.workWithStatementStrategy(connection -> connection.prepareStatement("delete from users"));
+        executeSql("delete from users");
     }
 
-    public void jdbcContextWithStatementStrategy(StatementStrategy statementStrategy) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-
-        try {
-            connection = dataSource.getConnection();
-            preparedStatement = statementStrategy.makePreparedStatement(connection);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw e;
-        } finally {
-            if (preparedStatement != null) {
-                try {
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                }
-            }
-        }
+    private void executeSql(final String query) throws SQLException {
+        jdbcTemplate.update(connection -> connection.prepareStatement(query));
     }
 
     public int getCount() throws SQLException {
