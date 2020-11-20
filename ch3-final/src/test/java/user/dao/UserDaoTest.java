@@ -9,6 +9,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import user.domain.User;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -73,5 +74,40 @@ class UserDaoTest {
         User user3 = new User("ki", "광일", "jassword");
         userDao.add(user3);
         assertThat(userDao.getCount()).isEqualTo(3);
+    }
+
+    @Test
+    public void getAll()  {
+        User user1 = new User("deocks", "덕수", "deocksword");
+        User user2 = new User("jj", "재주", "jassword");
+        User user3 = new User("ki", "광일", "jassword");
+
+        userDao.deleteAll();
+        List<User> users = userDao.getAll();
+        assertThat(users).size().isEqualTo(0);
+
+        userDao.add(user1);
+        List<User> users1 = userDao.getAll();
+        assertThat(users1).size().isEqualTo(1);
+        checkSameUser(user1, users1.get(0));
+
+        userDao.add(user2);
+        List<User> users2 = userDao.getAll();
+        assertThat(users2).size().isEqualTo(2);
+        checkSameUser(user1, users2.get(0));
+        checkSameUser(user2, users2.get(1));
+
+        userDao.add(user3);
+        List<User> users3 = userDao.getAll();
+        assertThat(users3).size().isEqualTo(3);
+        checkSameUser(user1, users3.get(0));
+        checkSameUser(user2, users3.get(1));
+        checkSameUser(user3, users3.get(2));
+    }
+
+    private void checkSameUser(User user1, User user2) {
+        assertThat(user1.getId()).isEqualTo(user2.getId());
+        assertThat(user1.getName()).isEqualTo(user2.getName());
+        assertThat(user1.getPassword()).isEqualTo(user2.getPassword());
     }
 }
