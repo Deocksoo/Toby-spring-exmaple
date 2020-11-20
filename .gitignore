@@ -2,7 +2,6 @@
 *.iml
 **/bin/*
 **/build/*
-**/docker/db/*
 *.jar
 .gradle
 **/out/*
