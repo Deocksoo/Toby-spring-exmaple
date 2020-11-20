@@ -10,11 +10,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import user.domain.User;
 
 public class UserDao {
-    private final DataSource dataSource;
     private final JdbcTemplate jdbcTemplate;
 
     public UserDao(DataSource dataSource) {
-        this.dataSource = dataSource;
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
