@@ -1,0 +1,16 @@
+version: '3'
+services:
+  local-db:
+    image: library/mysql:5.7
+    container_name: spring-db
+    restart: always
+    ports:
+      - 53306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: book
+      MYSQL_DATABASE: springbook
+      MYSQL_USER: spring
+      MYSQL_PASSWORD: book
+    volumes:
+      - ./db/mysql/init:/docker-entrypoint-initdb.d
+    command: --character-set-server=utf8 --collation-server=utf8_unicode_ci
