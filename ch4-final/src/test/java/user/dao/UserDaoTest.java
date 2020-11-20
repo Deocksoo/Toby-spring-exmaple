@@ -5,9 +5,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
+import org.springframework.jdbc.support.SQLExceptionTranslator;
+
 import user.domain.User;
 
 import java.sql.SQLException;
@@ -16,17 +18,21 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import javax.sql.DataSource;
+
 class UserDaoTest {
     private UserDao userDao;
+    private DataSource dataSource;
 
     @BeforeEach
     void setUp() {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(DaoFactory.class);
         userDao = applicationContext.getBean("userDao", UserDaoJdbc.class);
+        dataSource = applicationContext.getBean("dataSource", DataSource.class);
     }
 
     @AfterEach
-    void tearDown() throws SQLException {
+    void tearDown() {
         userDao.deleteAll();
     }
 
@@ -119,6 +125,22 @@ class UserDaoTest {
 
         assertThatThrownBy(() -> userDao.add(user))
             .isInstanceOf(DuplicateKeyException.class);
+    }
+
+    @Test
+    @DisplayName("SQLException 전환 기능의 학습 테스트")
+    void sqlExceptionTranslate() {
+        User user = new User("jj", "재주", "jassword");
+        try {
+            userDao.add(user);
+            userDao.add(user);
+        } catch (DuplicateKeyException exception) {
+            SQLException sqlException = (SQLException)exception.getRootCause();
+            SQLExceptionTranslator set = new SQLErrorCodeSQLExceptionTranslator(this.dataSource);
+
+            assertThat(set.translate(null, null, sqlException))
+                .isInstanceOf(DuplicateKeyException.class);
+        }
     }
 
     private void checkSameUser(User user1, User user2) {
