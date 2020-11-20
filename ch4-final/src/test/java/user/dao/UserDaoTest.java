@@ -20,7 +20,7 @@ class UserDaoTest {
     @BeforeEach
     void setUp() {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(DaoFactory.class);
-        userDao = applicationContext.getBean("userDao", UserDao.class);
+        userDao = applicationContext.getBean("userDao", UserDaoJdbc.class);
     }
 
     @AfterEach
