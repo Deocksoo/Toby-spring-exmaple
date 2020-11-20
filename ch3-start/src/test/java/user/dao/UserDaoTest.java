@@ -1,5 +1,11 @@
 package user.dao;
 
+import static org.assertj.core.api.Assertions.*;
+
+import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -7,15 +13,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
-import user.dao.DaoFactory;
-import user.dao.UserDao;
+
 import user.domain.User;
-
-import javax.sql.DataSource;
-import java.sql.SQLException;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class UserDaoTest {
     @Autowired
@@ -26,7 +25,8 @@ class UserDaoTest {
 
     @BeforeEach
     void setUp() {
-        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(DaoFactory.class);
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(
+            DaoFactory.class);
         dataSource = applicationContext.getBean("dataSource", DataSource.class);
         userDao = applicationContext.getBean("userDao", UserDao.class);
     }
