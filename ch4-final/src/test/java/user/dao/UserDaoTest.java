@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import user.domain.User;
 
@@ -107,6 +109,16 @@ class UserDaoTest {
         userDao.deleteAll();
         List<User> users0 = userDao.getAll();
         assertThat(users0).size().isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("같은 id의 사용자를 등록하면 예외 발생")
+    void duplicateKey() {
+        User user = new User("jj", "재주", "jassword");
+        userDao.add(user);
+
+        assertThatThrownBy(() -> userDao.add(user))
+            .isInstanceOf(DuplicateKeyException.class);
     }
 
     private void checkSameUser(User user1, User user2) {
