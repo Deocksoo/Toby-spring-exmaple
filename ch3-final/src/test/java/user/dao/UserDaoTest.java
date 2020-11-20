@@ -103,6 +103,10 @@ class UserDaoTest {
         checkSameUser(user1, users3.get(0));
         checkSameUser(user2, users3.get(1));
         checkSameUser(user3, users3.get(2));
+
+        userDao.deleteAll();
+        List<User> users0 = userDao.getAll();
+        assertThat(users0).size().isEqualTo(0);
     }
 
     private void checkSameUser(User user1, User user2) {
