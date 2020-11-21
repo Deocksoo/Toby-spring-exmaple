@@ -5,3 +5,4 @@
 *.jar
 .gradle
 **/out/*
+**/docker/db/mysql/data/*
